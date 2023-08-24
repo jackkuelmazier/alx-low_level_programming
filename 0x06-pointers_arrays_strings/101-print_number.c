@@ -2,7 +2,7 @@
 
 /**
  * print_number - prints an integer
- * @n: input
+ * @n: checks if n is negative or positive
  * Return: nothing
  */
 
