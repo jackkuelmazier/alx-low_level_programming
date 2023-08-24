@@ -1,4 +1,5 @@
 #include "main.h"
+#include <ctype.h>
 
 /**
  * rot13 - encodes a string using rot
@@ -12,10 +13,12 @@ char *rot13(char *str)
 
 	for (i = 0; str[i]; i++)
 	{
-		if (str[i] >= 'a' && str[i] <= 'm')
-			str[i] += 13;
-		else if (str[i] >= 'n' && str[i] <= 'z')
-			str[i] -= 13;
+		if (isalpha(str[i]))
+		{
+			char offset = isupper(str[i]) ? 'A' : 'a';
+
+			str[i] = ((str[i] - offset + 13) % 26) + offset;
+		}
 	}
 	return (str);
 }
