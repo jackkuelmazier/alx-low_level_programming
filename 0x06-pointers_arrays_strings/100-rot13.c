@@ -2,23 +2,29 @@
 
 /**
  * rot13 - encodes a string using rot
- * @str: sting to be returned
+ * @s: sting to be returned
  * Return: str
  */
 
-char *rot13(char *str)
+char *rot13(char *s)
 {
-	int i = 0;
+	int x;
 
-	while (str[i])
+	char rot13[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char ROT13[] = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM";
+	char *ptr = s;
+
+	while (*s)
 	{
-		if (('a' <= str[i] && str[i] <= 'z') || ('A' <= str[i] && str[i] <= 'Z'))
+		for (x = 0; x <= 52; x++)
 		{
-			int offset = ('a' <= str[i] && str[i] <= 'z') ? 'a' : 'A';
-
-			str[i] = ((str[i] - offset + 13) % 26) + offset;
+			if (*s == rot13[x])
+			{
+				*s = ROT13[x];
+				break;
+			}
 		}
-		i++;
+		s++;
 	}
-	return (str);
+	return (ptr);
 }
