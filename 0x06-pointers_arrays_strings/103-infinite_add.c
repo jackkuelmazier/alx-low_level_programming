@@ -34,6 +34,7 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 		if (j >= 0)
 			sum += n2[j--] - '0';
 		r[k++] = sum % 10 + '0';
+
 		carry = sum / 10;
 	}
 	r[k] = '\0';
