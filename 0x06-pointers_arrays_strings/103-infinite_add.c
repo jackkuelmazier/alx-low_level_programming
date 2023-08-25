@@ -1,39 +1,47 @@
 #include "main.h"
-#include <string.h>
 
 /**
  * infinite_add - adds two numbers
  * @n1: first number
  * @n2: second number
- * @r: the buffer that the function will use to store the result
- * @size_r: the buffer size
- * Return: r
+ * @r: buffer for result
+ * @size_r: buffer size
+ * Return: the pointer to dest
  */
 
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int i = strlen(n1) - 1, j = strlen(n2) - 1, k = 0, carry = 0;
+	int a, b, c, d, e, f;
 
-	while (i >= 0 || j >= 0 || carry)
-	{
-		int sum = carry;
-
-		if (i >= 0)
-			sum += n1[i--] - '0';
-		if (j >= 0)
-			sum += n2[j--] - '0';
-		r[k++] = sum % 10 + '0';
-		carry = sum / 10;
-	}
-	if (k >= size_r)
+	for (a = 0; n1[a]; a++)
+		;
+	for (b = 0; n2[b]; b++)
+		;
+	if (a > size_r || b > size_r)
 		return (0);
-	r[k] = '\0';
-	for (i = 0; i < k / 2; i++)
+	e = 0;
+	for (a -= 1, b -= 1, c = 0; c < size_r - 1; a--, b--, c++)
 	{
-		char temp = r[i];
-
-		r[i] = r[k - i - 1];
-		r[k - i - 1] = temp;
+		f = e;
+		if (a >= 0)
+			f += n1[a] - '0';
+		if (b >= 0)
+			f += n2[b] - '0';
+		if (a < 0 && b < 0 && f == 0)
+		{
+			break;
+		}
+		e = f / 10;
+		r[c] = f % 10 + '0';
+	}
+	r[b] = '\0';
+	if (a >= 0 || b >= 0 || e)
+		return (0);
+	for (c -= 1, c = 0; d < c; c--, d++)
+	{
+		e = r[c];
+		r[c] = r[d];
+		r[d] = e;
 	}
 	return (r);
 }
