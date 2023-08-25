@@ -3,23 +3,20 @@
 /**
  * print_number - prints an integer
  * @n: checks if n is negative or positive
- * Return: nothing
  */
 
 void print_number(int n)
 {
-	int m;
-
-	m = n;
+	unsigned int m = n;
 
 	if (n < 0)
 	{
-		_putchar('-');
+		_putchar(45);
 
-		m = -n;
+		m = -m;
 	}
 
-	if (m / 10 != 0)
+	if (m / 10)
 	{
 		print_number(m / 10);
 	}
