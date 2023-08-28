@@ -5,18 +5,17 @@
  * _strchr - locates a character in a string
  * @s: iterates over the character
  * @c: character to search
- * Return: s
+ * Return: nothing
  */
 
 char *_strchr(char *s, char c)
 {
-	int i;
+	int x;
 
-	while (*s != '\0')
+	for (x = 0; s[x] >= '\0'; x++)
 	{
-		if (*s == c)
-			return (s);
-		s++;
+		if (s[x] == c)
+			return (s + x);
 	}
 	return (NULL);
 }
