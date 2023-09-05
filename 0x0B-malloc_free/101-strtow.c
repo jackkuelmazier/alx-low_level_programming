@@ -10,36 +10,41 @@
 
 char **strtow(char *str)
 {
-	int i, k, l, words = 0, len = 0;
+	int i, j, k, start, end, words;
 	char **s;
 
 	if (str == NULL || *str == '\0')
 		return (NULL);
 
-	for (i = 0; str[i]; i++)
-		if ((str[i] == ' ' || str[i + 1] == '\0') && str[i + 1 - (i != 0)] != ' ')
+	for (i = 0, words = 0; str[i]; i++)
+		if ((str[i] != ' ' && str[i + 1] == ' ')
+				|| (str[i] != ' ' && str[i + 1] == '\0'))
 			words++;
 
 	s = malloc(sizeof(char *) * (words + 1));
 	if (s == NULL)
 		return (NULL);
 
-	for (i = 0; str[i]; i++)
-		if ((str[i] == ' ' || str[i + 1] == '\0') && str[i + 1 - (i != 0)] != ' ')
+	for (i = 0, k = 0; i < words; i++)
+	{
+		while (str[k] == ' ')
+			k++;
+		start = k;
+		while (str[k] != ' ' && str[k] != '\0')
+			k++;
+		end = k;
+		s[i] = malloc(sizeof(char) * (end - start + 1));
+		if (s[i] == NULL)
 		{
-			s[k] = malloc(sizeof(char) * (len + 1));
-			if (s[k] == NULL)
-			{
-				while (--k >= 0)
-					free(s[k]);
-				free(s);
-				return (NULL);
-			}
-			for (l = len - 1; l >= 0; l--)
-				s[k][l] = str[(i - len) + l + (len != i)];
-			s[k++][l] = '\0';
-			len = -1;
+			while (--i >= 0)
+				free(s[i]);
+			free(s);
+			return (NULL);
 		}
-	s[k] = NULL;
+		for (j = start; j < end; j++)
+			s[i][j - start] = str[j];
+		s[i][j - start] = '\0';
+	}
+	s[words] = NULL;
 	return (s);
 }
