@@ -9,23 +9,13 @@
  * @size: array size
  * @action: takes an integer as an
  * argument and returns nothing
- * Return: nothing
+ * Return: void
  */
 void array_iterator(int *array, size_t size, void (*action)(int))
 {
-	size_t i;
+	int *end = array + size - 1;
 
-	for (i = 0; i < size; i++)
-	{
-		action(array[i]);
-	}
-}
-
-/**
- * print_int - prints each element of the array
- * @n: integer number
- */
-void print_int(int n)
-{
-	printf("%d\n", n);
+	if (array && size && action)
+		while (array <= end)
+			action(*array++);
 }
