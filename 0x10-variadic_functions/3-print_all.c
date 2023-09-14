@@ -1,12 +1,13 @@
+#include "variadic_functions.h"
+
 #include <stdarg.h>
 #include <stdio.h>
-
-#include "variadic_functions.h"
 
 /**
  * print_all - prints anything
  * @format: lists of types of arguments
  * passed to the function
+ * @...: integer sum
  * Return: nothing
  */
 
