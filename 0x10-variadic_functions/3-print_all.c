@@ -10,39 +10,42 @@
  * @...: integer sum
  * Return: nothing
  */
-
 void print_all(const char * const format, ...)
 {
-	va_list args;
-	int z = 0;
-	char c, *s;
+	va_list print;
+	unsigned int k = 0;
+	char *s, *separator;
 
-	va_start(args, format);
+	va_start(print, format);
 
-	while (format[z])
+	separator = "";
+
+	while (format && format[k])
 	{
-		c = format[z];
-		if (c == 'c')
+		switch (format[k])
 		{
-			printf("%c", va_arg(args, int));
-		} else if (c == 'i')
-		{
-			printf("%d", va_arg(args, int));
-		} else if (c == 'f')
-		{
-			printf("%f", va_arg(args, double));
-		} else if (c == 's')
-		{
-			s = va_arg(args, char *);
-			if (s == NULL)
-				printf("(nil)");
-			else
-				printf("%s", s);
+			case 'c':
+				printf("%s%c", separator, va_arg(print, int));
+				break;
+			case 'i':
+				printf("%s%d", separator, va_arg(print, int));
+				break;
+			case 'f':
+				printf("%s%f", separator, va_arg(print, double));
+				break;
+			case 's':
+				s = va_arg(print, char *);
+				if (s == NULL)
+					s = "(nil)";
+				printf("%s%s", separator, s);
+				break;
+			default:
+				k++;
+				continue;
 		}
-		if (format[z + 1] && (c == 'c' || c == 'i' || c == 'f' || c == 's'))
-			printf(", ");
-		z++;
+		separator = ", ";
+		k++;
 	}
 	printf("\n");
-	va_end(args);
+	va_end(print);
 }
