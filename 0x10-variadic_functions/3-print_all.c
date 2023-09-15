@@ -22,24 +22,22 @@ void print_all(const char * const format, ...)
 	while (format[z])
 	{
 		c = format[z];
-		switch (c)
+		if (c == 'c')
 		{
-			case 'c':
-				printf("%c", va_arg(args, int));
-				break;
-			case 'i':
-				printf("%d", va_arg(args, int));
-				break;
-			case 'f':
-				printf("%f", va_arg(args, double));
-				break;
-			case 's':
-				s = va_arg(args, char *);
-				if (s == NULL)
-					printf("(nil)");
-				else
-					printf("%s", s);
-				break;
+			printf("%c", va_arg(args, int));
+		} else if (c == 'i')
+		{
+			printf("%d", va_arg(args, int));
+		} else if (c == 'f')
+		{
+			printf("%f", va_arg(args, double));
+		} else if (c == 's')
+		{
+			s = va_arg(args, char *);
+			if (s == NULL)
+				printf("(nil)");
+			else
+				printf("%s", s);
 		}
 		if (format[z + 1] && (c == 'c' || c == 'i' || c == 'f' || c == 's'))
 			printf(", ");
