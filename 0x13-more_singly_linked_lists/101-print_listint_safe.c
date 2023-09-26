@@ -2,6 +2,54 @@
 #include <stdlib.h>
 #include "lists.h"
 
+size_t looped_listint_len(const listint_t *head);
+size_t print_listint_safe(const listint_t *head);
+
+/**
+ * looped_listint_len - Counts the number of unique node
+ * @head: pointer to an integer
+ * Return: 0
+ */
+size_t looped_listint_len(const listint_t *head)
+{
+	const listint_t *cat, *pig;
+	size_t num_nodes = 1;
+
+	if (head == NULL || head->next == NULL)
+		return (0);
+
+	cat = head->next;
+	pig = (head->next)->next;
+
+	while (pig)
+	{
+		if (cat == pig)
+		{
+			cat  = head;
+			while (cat != pig)
+			{
+				num_nodes++;
+				cat = cat->next;
+				pig = pig->next;
+			}
+
+			cat = cat->next;
+			while (cat != pig)
+			{
+				num_nodes++;
+				cat = cat->next;
+			}
+
+			return (num_nodes);
+		}
+
+		cat = cat->next;
+		pig = (pig->next)->next;
+	}
+
+	return (0);
+}
+
 /**
  * print_listint_safe - prints a listint_t linked list
  * @head: double pointer
@@ -9,35 +57,28 @@
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	size_t num_nodes = 0;
-	const listint_t *slow_ptr, *fast_ptr;
+	size_t num_nodes, index = 0;
 
-	if (head == NULL)
-		exit(98);
+	num_nodes = looped_listint_len(head);
 
-	slow_ptr = head;
-	fast_ptr = head;
-
-	while (slow_ptr && fast_ptr && fast_ptr->next)
+	if (num_nodes == 0)
 	{
-		printf("[%p] %d\n", (void *)slow_ptr, slow_ptr->n);
-		num_nodes++;
-
-		slow_ptr = slow_ptr->next;
-		fast_ptr = fast_ptr->next->next;
-
-		if (slow_ptr == fast_ptr)
+		for (; head != NULL; num_nodes++)
 		{
-			printf("-> [%p] %d\n", (void *)slow_ptr, slow_ptr->n);
-			return (num_nodes);
+			printf("[%p] %d\n", (void *)head, head->n);
+			head = head->next;
 		}
 	}
 
-	while (slow_ptr != NULL)
+	else
 	{
-		printf("[%p] %d\n", (void *)slow_ptr, slow_ptr->n);
-		num_nodes++;
-		slow_ptr = slow_ptr->next;
+		for (index = 0; index < num_nodes; index++)
+		{
+			printf("[%p] %d\n", (void *)head, head->n);
+			head = head->next;
+		}
+
+		printf("-> [%p] %d\n", (void *)head, head->n);
 	}
 
 	return (num_nodes);
